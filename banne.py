@@ -1,27 +1,32 @@
-import kivy
+from kivy.uix.button import Button
 
 from kivy.app import App
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.button import Button
+
+from functools import partial
 import time
-import requests
-from kivy.core.text import Label as CoreLabel
-from kivy.core.image import Image 
-from kivy.uix.image import AsyncImage
+from kivy.uix.button import Label
+
 
 
 class Banne(App):
 
+    def disable(self, instance, *args):
+
+        instance.disabled = True
+
+    def update(self, instance, *args):
+
+        instance.text = time.ctime()
+        
+
     def build(self):
 
-        layout = GridLayout(cols=2)
-        layout.add_widget(Button(text=time.ctime()))
+        mybtn = Button(text="Bienvenida de nuevo Banne!!!", font_size='30')
 
-        layout.add_widget(Button(text="Enviar ubicación a Mike"))
+        mybtn.bind(on_press=partial(self.disable, mybtn))
 
-        return layout
+        mybtn.bind(on_press=partial(self.update, mybtn))
 
+        return mybtn
 
-if __name__ == '__main__':
-    Banne().run()
+Banne().run()
